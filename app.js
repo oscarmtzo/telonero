@@ -19,7 +19,7 @@ const expressHandlebars = require("express-handlebars");
 
 
 mongoose
-  .connect("mongodb://localhost/loginapp", { useNewUrlParser: true })
+  .connect("mongodb+srv://oscar:8130@cluster0-plmi4.mongodb.net/test?retryWrites=true&w=majority", { useNewUrlParser: true })
   .then(x =>
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
   )
