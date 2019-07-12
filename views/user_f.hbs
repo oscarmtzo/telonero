@@ -1,0 +1,62 @@
+<head>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.css' rel='stylesheet' />
+
+</head>
+<div class="publico">
+  <div class="container">
+    <nav>
+      <ul>
+        <div class="nav-item-1">
+          <div class="list-item">
+            <li>
+              <div class="button" id="button-2" style="border:2px solid white; background-color: transparent;">
+              <div id="slide"></div>
+              <a href="/profile">Home</a>
+              </div>
+            </li>
+          </div>
+          <div class="list-item">
+            <li>
+              <div class="button" id="button-2" style="border:2px solid white; background-color: transparent;">
+              <div id="slide"></div>
+              <a href="/">Logout</a>
+              </div>
+            </li>
+          </div>
+        </div>
+  <!--  ///////////// Hasta aqui la barra de navegacion /// -->
+
+</div>
+  <div class="todo">
+    <div class="mapa">
+      <div class="tarjeta" style="max-width: 7.8em">
+        <h2>Oh hi {{user.name}}</h2>
+        <a href="/profile"><img src="{{user.profileImg}}" class="imgRed"></a>
+      </div>
+    
+    <div class="posts">
+    <div class="seleccionar">
+      <div class="posts">
+        <a href="/users/{{id}}">Posts</a>
+      </div>
+      <div class="artistas">
+        Artistas recomendados
+      </div>
+      <div class="musica">
+        <a href="/users/music/{{id}}">Musica</a>
+      </div>
+      <div class="eventos">
+        <a href="/users/events/{{id}}">Eventos</a>
+      </div>
+    </div>
+    {{#each artist}}
+    <p>si</p>
+    <a href="/users/{{this.id}}"> <img src="{{this.profileImg}}"></a>
+    {{/each}}
+  </div>
+  <div class="reproductor">
+    <iframe src="https://open.spotify.com/embed/album/1DFixLWuPkv3KT3TnV35m3" width="300" height="380" frameborder="0"
+      allowtransparency="true" allow="encrypted-media"></iframe>
+  </div>
+</div>
+<script src='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>

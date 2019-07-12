@@ -1,0 +1,130 @@
+<head>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.css' rel='stylesheet' />
+</head>
+<div class="publico">
+  <div class="container">
+    <nav>
+      <ul>
+        <div class="nav-item-1">
+          <div class="list-item">
+            <li>
+              <div class="button" id="button-2" style="border:2px solid white; background-color: transparent;">
+              <div id="slide"></div>
+              <a href="/profile">Home</a>
+              </div>
+            </li>
+          </div>
+          <div class="list-item">
+            <li>
+              <div class="button" id="button-2" style="border:2px solid white; background-color: transparent;">
+              <div id="slide"></div>
+              <a href="/">Logout</a>
+              </div>
+            </li>
+          </div>
+        </div>
+
+        <div class="nav-item-2" style="display: flex">
+          <form id="searc" class="nav-bar-search" style="margin: 0;" action="/users" method="post">
+            <input class="searchInput" id="poster" type="search" placeholder="Search" aria-label="Search" name="search">
+            <button style="height: 3em;" id="poster" type="submit">Search</button>
+          </form>
+        </div>
+      </ul>
+    </nav>
+  </div> 
+  <!--  ///////////// Hasta aqui la barra de navegacion /// -->
+  <div class="todo">
+    <div class="mapa">
+      <div class="tarjeta" style="max-width: 7.8em">
+        <h2>Oh hi {{user.name}}</h2>
+        <img src="{{user.profileImg}}" class="imgRed">
+        
+      </div>
+    <div class="tarjeta" style="border: transparent">
+      <form action="/profile/picture" method="post" enctype="multipart/form-data">
+        <label for="poster">Poster</label>
+        <input type="file" name="photo" id="poster">
+        <input type="submit" value="save" id="poster">
+      </form>
+    </div>
+    <div id='map' style='width: 100%; height:20em;'></div>
+  </div>
+
+  <div class="posts">
+    <div class="seleccionarPad">
+      <div class="seleccionar">
+        <div class="artistas button" id="button-2">
+            <a href="/profile">Post</a> 
+        </div>
+        
+        <div class="artistas button" id="button-2">
+            <a href="/profile/artistas">Artistas</a> 
+        </div>
+
+        <div class="musica button" id="button-2">
+          <a href="/profile/music"> Musica</a>
+        </div>
+
+        <div class="eventos button" id="button-2">
+            <a href="/profile/eventos">Eventos</a>
+        </div>
+      </div> 
+      <!-- //////// TRES BOTONES COLUMNA CENTRAL -->
+        
+        <div class="seleccionar">
+          <form action="/profile" method="post">
+            <textarea id="textarea"name="content" placeholder="Type in new post" rows="3"></textarea>
+
+          
+            <button class="redBtn" id="postBtn"  type="submit" >Post New Comment</button>
+          </form>
+        </div>
+        <div class="center-column">
+            
+          {{#each post}}
+            <p class="p" data-="type">@{{this.name}}  </p>
+          <div class="section__brick" style="overflow-y:hidden"><!--TARJETAS PARA COMENTARIOS -->
+            <p>{{this.content}}</p>
+          </div>
+          </>
+          {{/each}}
+        </div>
+    </div>
+      
+    </div>
+  <div class="reproductor">
+    <iframe src="https://open.spotify.com/embed/album/1DFixLWuPkv3KT3TnV35m3" width="300" height="700" frameborder="0"
+      allowtransparency="true" allow="encrypted-media"></iframe>
+  </div>
+</div>
+</div>
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1IjoiY2h1Y2E5OSIsImEiOiJjanhtMmNoajcwY2d5M3JtZ2F5am15cnN3In0.bKS7-zBZuo3040BnEcmqkA';
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v11'
+  });
+  let rightNow = new Date();
+  rightNow.setHours(rightNow.getHours() - 7);
+  let today = rightNow.toISOString().slice(0, 10)
+  let n, mark, pop;
+  axios.get("/profile?json=1")
+    .then(res => {
+      console.log(res)
+      const { events } = res.data;
+      events.forEach(event => {
+        console.log(today)
+        if (event.fecha == today) {
+          n = event.name
+          pop = new mapboxgl.Popup().setText(n);
+          mark = new mapboxgl.Marker()
+            .setLngLat({ lng: event.location.coordinates[0], lat: event.location.coordinates[1] })
+            .setPopup(pop)
+            .addTo(map);
+        }
+      })
+    });
+</script>

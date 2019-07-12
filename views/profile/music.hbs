@@ -1,0 +1,114 @@
+<head>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.css' rel='stylesheet' />
+
+<div class="publico">
+  <div class="container">
+    <nav>
+      <ul>
+        <div class="nav-item-1">
+          <div class="list-item">
+            <li>
+              <div class="button" id="button-2" style="border:2px solid white; background-color: transparent;">
+              <div id="slide"></div>
+              <a href="/profile">Home</a>
+              </div>
+            </li>
+          </div>
+          <div class="list-item">
+            <li>
+              <div class="button" id="button-2" style="border:2px solid white; background-color: transparent;">
+              <div id="slide"></div>
+              <a href="/">Logout</a>
+              </div>
+            </li>
+          </div>
+        </div>
+
+        <div class="nav-item-2" style="display: flex">
+          <form id="searc" class="nav-bar-search" style="margin: 0;" action="/users" method="post">
+            <input class="searchInput" id="poster" type="search" placeholder="Search" aria-label="Search" name="search">
+            <button style="height: 3em;" id="poster" type="submit">Search</button>
+          </form>
+        </div>
+      </ul>
+    </nav>
+  </div> 
+  <!--  ///////////// Hasta aqui la barra de navegacion /// -->
+  <div class="todo">
+    <div class="mapa">
+      <div class="tarjeta" style="max-width: 7.8em">
+        <h2>Oh hi {{user.name}}</h2>
+        <img src="{{user.profileImg}}" class="imgRed">
+        
+      </div>
+    <div class="tarjeta" style="border: transparent">
+      <form action="/profile/picture" method="post" enctype="multipart/form-data">
+        <label for="poster">Poster</label>
+        <input type="file" name="photo" id="poster">
+        <input type="submit" value="save" id="poster">
+      </form>
+    </div>
+    <div id='map' style='width: 100%; height:20em;'></div>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>
+    <script>
+      mapboxgl.accessToken = 'pk.eyJ1IjoiY2h1Y2E5OSIsImEiOiJjanhtMmNoajcwY2d5M3JtZ2F5am15cnN3In0.bKS7-zBZuo3040BnEcmqkA';
+      var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/dark-v9',
+        center: [-99.1566, 19.4204],
+        zoom: 14
+      })
+      map.addControl(new mapboxgl.GeolocateControl({
+          positionOptions: {
+            enableHighAccuracy: true
+          },
+          trackUserLocation: true
+        }))
+      let rightNow = new Date();
+      let today = rightNow.toISOString().slice(0, 10)
+    </script>
+  </div>
+
+
+  <div class="posts">
+    <div class="seleccionarPad">
+        <div class="seleccionar">
+          <div class="posts button" id="button-2">
+              <a href="/profile">Post</a> 
+
+          </div>
+          <div class="artistas button" id="button-2">
+              <a href="/profile/artistas">Recomendados</a>
+          </div>
+          <div class="musica button" id="button-2">
+            Musica 
+          </div>
+          <div class="eventos button" id="button-2">
+              <a href="/profile/eventos">Eventos</a>
+          </div>
+      </div>
+      <br><br>
+            <!-- //////// CUATRO BOTONES COLUMNA CENTRAL -->
+    <div class="seleccionar">
+      <br><br>
+      <br>
+      <<form action="/profile/music" method="POST" enctype="multipart/form-data">
+        <lable for="nombre">Ingresa el nombre tu cancion</lable>
+        <input type="text" name="nombre">
+        <label for="file">Ingresa un mp3 de tu musica</label>
+        <input type="file" name="file" id="musca">
+        <button type="submit">Post</button>
+      </form>
+    </div>
+    {{#each music}}
+    <h2>{{this.name}} </h2>
+    <audio src="{{this.path}}" controls></audio>
+    {{/each}}
+  </div>
+  <div class="reproductor">
+    <iframe src="https://open.spotify.com/embed/album/1DFixLWuPkv3KT3TnV35m3" width="300" height="380" frameborder="0"
+      allowtransparency="true" allow="encrypted-media"></iframe>
+  </div>
+</div>
+<script src='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>
+</div>
